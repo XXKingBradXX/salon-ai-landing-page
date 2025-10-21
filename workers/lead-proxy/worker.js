@@ -29,20 +29,6 @@ export default {
       return json({ ok: true }, 200, cors);
     }
 
-    const token = payload["cf-turnstile-response"];
-    if (!token) return json({ message: "Missing bot verification" }, 400, cors);
-
-    // Verify Turnstile
-    const fd = new FormData();
-    fd.append("secret", env.TURNSTILE_SECRET);
-    fd.append("response", token);
-    fd.append("remoteip", ip);
-
-    const tsResp = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", { method: "POST", body: fd });
-    const tsData = await tsResp.json();
-    if (!tsData.success) return json({ message: "Bot verification failed" }, 403, cors);
-
-    delete payload["cf-turnstile-response"];
     payload._meta = {
       ip,
       ua: request.headers.get("User-Agent") || "",

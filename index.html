@@ -37,6 +37,7 @@
   <script>
     window.APP_CONFIG = {
       DEMO_VIDEO_URL: "",
+      TURNSTILE_SITE_KEY: "",
       TURNSTILE_SITE_KEY: "0x4AAAAAAB771F457k4Zdex3",
       SUBMIT_URL: "https://www.empireautom.org/api/lead"
     };
@@ -551,7 +552,7 @@
             How is data secured?
             <i data-lucide="chevron-down" class="h-5 w-5 transition-transform group-open:rotate-180"></i>
           </summary>
-          <p class="mt-4 text-sm text-slate-300">All transcripts are encrypted at rest, Turnstile protects against bots, and the worker proxy hides your n8n workflows.</p>
+          <p class="mt-4 text-sm text-slate-300">All transcripts are encrypted at rest, honeypot fields deter bots, and the worker proxy hides your n8n workflows.</p>
         </details>
       </div>
     </section>
@@ -753,15 +754,9 @@
 
     form?.addEventListener('submit', async (event) => {
       event.preventDefault();
-      if (!turnstileToken) {
-        setFormState({ message: 'Please complete the bot check.', type: 'error' });
-        return;
-      }
-
       const formData = new FormData(form);
       const payload = Object.fromEntries(formData.entries());
       payload.newsletter = formData.get('newsletter') === 'true';
-      payload['cf-turnstile-response'] = turnstileToken;
 
       setFormState({ loading: true, message: '' });
 
