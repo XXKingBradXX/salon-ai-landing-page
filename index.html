@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Empire Automations — AI Receptionist for Salons</title>
+  <meta name="description" content="Empire Automations delivers an AI receptionist built for salons. Capture leads instantly, automate bookings, and delight every caller 24/7." />
+  <link rel="canonical" href="https://www.empireautom.org/landing-page" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Empire Automations — AI Receptionist for Salons" />
+  <meta property="og:description" content="Capture salon leads automatically with our AI receptionist. Book appointments, answer FAQs, and follow-up without lifting a finger." />
+  <meta property="og:url" content="https://www.empireautom.org/landing-page" />
+  <meta property="og:image" content="https://www.empireautom.org/assets/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Empire Automations — AI Receptionist for Salons" />
+  <meta name="twitter:description" content="AI receptionist that books salon appointments and handles client communication round-the-clock." />
+  <meta name="twitter:image" content="https://www.empireautom.org/assets/og-image.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.4/dist/tailwind.min.css" integrity="sha384-I1YgJWO/auNHfjlXMUl3tXQVy77qZGAf9hcz7h7H5b16PnfhXlBx/6CkXbkqVKgf" crossorigin="anonymous">
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <script>
+    const APP_CONFIG = {
+      DEMO_VIDEO_URL: "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ",
+      TURNSTILE_SITE_KEY: "PASTE_YOUR_TURNSTILE_SITE_KEY",
+      SUBMIT_URL: "https://www.empireautom.org/api/lead",
+    };
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Empire Automations — AI Receptionist",
+      "url": "https://www.empireautom.org/landing-page",
+      "telephone": "+15064053897",
+      "areaServed": ["Canada", "United States"],
+      "description": "AI receptionist that books salon appointments automatically.",
+      "image": "https://www.empireautom.org/assets/og-image.jpg"
+    }
+  </script>
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background-color: #050510;
+      color: #f5f5ff;
+    }
+    .gradient-text {
+      background: linear-gradient(90deg, #8b5cf6, #22d3ee);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .backdrop {
+      background: linear-gradient(180deg, rgba(139, 92, 246, 0.35), rgba(15, 23, 42, 0.95));
+    }
+    .noise {
+      position: fixed;
+      inset: 0;
+      opacity: 0.08;
+      pointer-events: none;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.5"/></svg>');
+    }
+    .glass {
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(16px);
+    }
+    .highlight-ring:focus-visible {
+      outline: 2px solid #22d3ee;
+      outline-offset: 2px;
+    }
+    .button-primary {
+      background: linear-gradient(135deg, #6366f1, #22d3ee);
+      color: #0f172a;
+      font-weight: 600;
+      border-radius: 9999px;
+      padding: 0.75rem 1.75rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35);
+    }
+    .button-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(99, 102, 241, 0.4);
+    }
+    .button-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+  </style>
+</head>
+<body class="relative antialiased">
+  <div class="noise"></div>
+  <header class="sticky top-0 z-50 backdrop">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-12">
+      <a href="#top" class="flex items-center gap-3 text-lg font-semibold highlight-ring" aria-label="Empire Automations home">
+        <span class="grid h-12 w-12 place-items-center rounded-2xl bg-slate-900/70 shadow-lg shadow-indigo-500/30">
+          <i data-lucide="sparkles" class="h-6 w-6 text-cyan-300" aria-hidden="true"></i>
+        </span>
+        <span>
+          <span class="block text-sm text-slate-300">Empire Automations</span>
+          <span class="block text-lg font-bold">AI Receptionist</span>
+        </span>
+      </a>
+      <nav class="hidden items-center gap-10 text-sm font-medium md:flex">
+        <a class="text-slate-200 transition hover:text-white highlight-ring" href="#problem">Problem</a>
+        <a class="text-slate-200 transition hover:text-white highlight-ring" href="#how">How it works</a>
+        <a class="text-slate-200 transition hover:text-white highlight-ring" href="#features">Features</a>
+        <a class="text-slate-200 transition hover:text-white highlight-ring" href="#pricing">Pricing</a>
+        <a class="text-slate-200 transition hover:text-white highlight-ring" href="#faq">FAQ</a>
+      </nav>
+      <div class="hidden md:flex items-center gap-4">
+        <a href="tel:+15064053897" class="text-sm font-semibold text-cyan-300 transition hover:text-cyan-200 highlight-ring">Call +1 (506) 405-3897</a>
+        <a href="#demo" class="button-primary highlight-ring">Book a Demo</a>
+      </div>
+      <button id="mobile-menu-button" class="md:hidden highlight-ring" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle navigation">
+        <i data-lucide="menu" class="h-7 w-7"></i>
+      </button>
+    </div>
+    <div id="mobile-menu" class="glass md:hidden" hidden>
+      <div class="space-y-4 px-6 pb-6 pt-2">
+        <a class="block rounded-lg px-3 py-2 text-sm font-medium text-slate-100 hover:bg-white/10 highlight-ring" href="#problem">Problem</a>
+        <a class="block rounded-lg px-3 py-2 text-sm font-medium text-slate-100 hover:bg-white/10 highlight-ring" href="#how">How it works</a>
+        <a class="block rounded-lg px-3 py-2 text-sm font-medium text-slate-100 hover:bg-white/10 highlight-ring" href="#features">Features</a>
+        <a class="block rounded-lg px-3 py-2 text-sm font-medium text-slate-100 hover:bg-white/10 highlight-ring" href="#pricing">Pricing</a>
+        <a class="block rounded-lg px-3 py-2 text-sm font-medium text-slate-100 hover:bg-white/10 highlight-ring" href="#faq">FAQ</a>
+        <a class="block rounded-lg px-3 py-2 text-sm font-semibold text-cyan-200 hover:bg-white/10 highlight-ring" href="tel:+15064053897">Call +1 (506) 405-3897</a>
+        <a class="button-primary block text-center highlight-ring" href="#demo">Book a Demo</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top" class="relative mx-auto max-w-7xl px-6 pb-24 pt-16 lg:px-12">
+    <section class="relative overflow-hidden rounded-3xl border border-slate-700/60 bg-slate-900/60 px-8 py-20 shadow-2xl shadow-indigo-900/40 lg:px-16">
+      <div class="absolute inset-0 -z-10 opacity-70" aria-hidden="true">
+        <div class="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-indigo-500/40 blur-3xl"></div>
+        <div class="absolute -left-32 bottom-0 h-96 w-96 rounded-full bg-cyan-400/30 blur-3xl"></div>
+      </div>
+      <div class="grid gap-16 lg:grid-cols-2 lg:items-center">
+        <div class="space-y-8">
+          <span class="inline-flex items-center gap-2 rounded-full bg-indigo-500/20 px-4 py-1 text-sm font-medium text-indigo-200">
+            <i data-lucide="bot" class="h-4 w-4"></i>
+            Salon-first AI receptionist
+          </span>
+          <h1 class="text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+            Give every caller a <span class="gradient-text">VIP experience</span> without hiring another receptionist.
+          </h1>
+          <p class="text-lg text-slate-300 lg:text-xl">
+            Empire Automations captures leads, books appointments, and answers FAQs instantly using conversational AI. Keep your chairs filled and your team focused on clients.
+          </p>
+          <div class="flex flex-wrap items-center gap-4">
+            <a href="#demo" class="button-primary highlight-ring">Book a Live Demo</a>
+            <button id="watch-demo" class="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/5 highlight-ring">
+              <i data-lucide="play-circle" class="h-5 w-5"></i>
+              Watch 90-second tour
+            </button>
+            <div class="flex items-center gap-2 text-sm text-slate-400">
+              <i data-lucide="shield-check" class="h-4 w-4 text-cyan-300"></i>
+              SOC2-ready infrastructure
+            </div>
+          </div>
+          <dl class="grid gap-6 sm:grid-cols-3">
+            <div>
+              <dt class="text-sm text-slate-400">Leads captured</dt>
+              <dd class="text-3xl font-semibold text-white">3.5x</dd>
+            </div>
+            <div>
+              <dt class="text-sm text-slate-400">Calls answered in <span class="whitespace-nowrap">&lt; 10s</span></dt>
+              <dd class="text-3xl font-semibold text-white">98%</dd>
+            </div>
+            <div>
+              <dt class="text-sm text-slate-400">Average ROI</dt>
+              <dd class="text-3xl font-semibold text-white">7.2×</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="relative">
+          <div class="absolute inset-0 -z-10 rounded-3xl bg-gradient-to-br from-indigo-500/30 via-slate-900/0 to-cyan-400/20 blur-3xl"></div>
+          <div class="glass rounded-3xl border border-white/10 p-6 shadow-xl">
+            <div class="flex items-center gap-3 text-sm text-slate-300">
+              <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-500/20 text-indigo-200">
+                <i data-lucide="waves" class="h-5 w-5"></i>
+              </div>
+              <div>
+                <p class="font-semibold text-white">AI handles the rush</p>
+                <p>Answer calls, confirm bookings, and trigger follow-up flows instantly.</p>
+              </div>
+            </div>
+            <div class="mt-8 space-y-6">
+              <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-6">
+                <p class="text-sm uppercase tracking-wide text-cyan-200">After-hours booking</p>
+                <p class="mt-2 text-lg font-semibold text-white">“We filled 37 empty slots in the first two weeks.”</p>
+                <p class="mt-3 text-sm text-slate-400">— Bianca, Owner at GlowUp Salon</p>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-slate-900/60 p-6">
+                <p class="text-sm uppercase tracking-wide text-purple-200">Automated follow-ups</p>
+                <p class="mt-2 text-lg font-semibold text-white">“Texts go out seconds after a missed call. Our clients love it.”</p>
+                <p class="mt-3 text-sm text-slate-400">— Tyler, Studio Manager at Chroma Hair</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="problem" class="mt-32 grid gap-16 lg:grid-cols-2 lg:items-start">
+      <div class="space-y-6">
+        <h2 class="text-3xl font-semibold text-white sm:text-4xl">Your phone is ringing off the hook — but every missed call costs real revenue.</h2>
+        <p class="text-lg text-slate-300">
+          Stylists are busy, front-desk turnover is high, and clients expect instant answers. When calls roll to voicemail, prospects book elsewhere. Empire Automations works 24/7 to capture every lead and book them on your calendar without adding payroll.
+        </p>
+        <ul class="space-y-4 text-sm text-slate-300">
+          <li class="flex items-start gap-3">
+            <i data-lucide="alarm-minus" class="mt-1 h-5 w-5 text-cyan-300"></i>
+            <span>Missed calls translate to empty chairs and lost rebooking opportunities.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <i data-lucide="message-square-off" class="mt-1 h-5 w-5 text-cyan-300"></i>
+            <span>Manual follow-ups are slow — potential clients ghost before you can respond.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <i data-lucide="user-x" class="mt-1 h-5 w-5 text-cyan-300"></i>
+            <span>Hiring and training new receptionists is expensive and time-consuming.</span>
+          </li>
+        </ul>
+      </div>
+      <div class="space-y-6 rounded-3xl border border-white/10 bg-slate-900/70 p-8 shadow-xl">
+        <h3 class="text-xl font-semibold text-white">Built to support multi-location salon teams</h3>
+        <p class="text-slate-300">Empire Automations plugs into your existing booking systems, syncs scripts across locations, and enforces your policies every time.</p>
+        <div class="grid gap-6 sm:grid-cols-2">
+          <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-5">
+            <p class="text-sm text-slate-400">Integrations</p>
+            <p class="mt-2 text-base font-semibold text-white">GlossGenius, Mangomint, Meevo, Fresha, Boulevard</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-5">
+            <p class="text-sm text-slate-400">Channels covered</p>
+            <p class="mt-2 text-base font-semibold text-white">Phone, SMS, WhatsApp, Web chat</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how" class="mt-32">
+      <div class="text-center">
+        <span class="text-sm font-semibold uppercase tracking-wide text-cyan-300">How it works</span>
+        <h2 class="mt-4 text-3xl font-semibold text-white sm:text-4xl">From missed call to booked appointment in three steps</h2>
+      </div>
+      <div class="mt-14 grid gap-10 md:grid-cols-3">
+        <div class="glass rounded-3xl border border-white/10 p-6">
+          <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-500/20">
+            <span class="text-lg font-semibold text-indigo-200">01</span>
+          </div>
+          <h3 class="text-xl font-semibold text-white">Answer every inquiry</h3>
+          <p class="mt-3 text-slate-300">AI voice and SMS agents instantly greet callers, capture intent, and sync notes into your CRM or booking tool.</p>
+        </div>
+        <div class="glass rounded-3xl border border-white/10 p-6">
+          <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-500/20">
+            <span class="text-lg font-semibold text-indigo-200">02</span>
+          </div>
+          <h3 class="text-xl font-semibold text-white">Book &amp; confirm</h3>
+          <p class="mt-3 text-slate-300">Empire Automations validates stylist availability, offers ideal times, and confirms appointments with payment or card-on-file policies.</p>
+        </div>
+        <div class="glass rounded-3xl border border-white/10 p-6">
+          <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-500/20">
+            <span class="text-lg font-semibold text-indigo-200">03</span>
+          </div>
+          <h3 class="text-xl font-semibold text-white">Follow up automatically</h3>
+          <p class="mt-3 text-slate-300">Launch reminders, review requests, and membership offers the moment the call ends.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="mt-32">
+      <div class="grid gap-12 lg:grid-cols-[1.1fr,0.9fr]">
+        <div class="space-y-6">
+          <span class="text-sm font-semibold uppercase tracking-wide text-purple-200">Why salons choose Empire Automations</span>
+          <h2 class="text-3xl font-semibold text-white sm:text-4xl">AI designed to sound like your best front-desk manager.</h2>
+          <p class="text-lg text-slate-300">Trained on salon-specific dialogues, our AI receptionist keeps the conversation on-brand and within your policies.</p>
+          <ul class="space-y-5 text-slate-200">
+            <li class="flex gap-3">
+              <i data-lucide="sparkle" class="mt-1 h-5 w-5 text-cyan-300"></i>
+              <span><strong>Tone-matched scripts:</strong> Upload your best call recordings and brand guidelines. We craft responses that fit your vibe.</span>
+            </li>
+            <li class="flex gap-3">
+              <i data-lucide="workflow" class="mt-1 h-5 w-5 text-cyan-300"></i>
+              <span><strong>Workflow automation:</strong> Trigger n8n flows for deposits, stylist match surveys, and post-visit drip sequences.</span>
+            </li>
+            <li class="flex gap-3">
+              <i data-lucide="lock" class="mt-1 h-5 w-5 text-cyan-300"></i>
+              <span><strong>Compliance built-in:</strong> PCI-aware bookings, consent tracking, and audit-friendly transcripts.</span>
+            </li>
+            <li class="flex gap-3">
+              <i data-lucide="chart-line" class="mt-1 h-5 w-5 text-cyan-300"></i>
+              <span><strong>Performance dashboards:</strong> Monitor conversion rates, top FAQs, and reclaimed revenue across every location.</span>
+            </li>
+          </ul>
+        </div>
+        <div class="relative">
+          <div class="absolute inset-0 -z-10 rounded-3xl bg-gradient-to-br from-purple-500/30 via-transparent to-sky-400/20 blur-3xl"></div>
+          <div class="glass rounded-3xl border border-white/10 p-8 shadow-xl">
+            <div class="flex items-center justify-between">
+              <h3 class="text-lg font-semibold text-white">Operations dashboard</h3>
+              <span class="rounded-full bg-green-400/20 px-3 py-1 text-xs font-semibold text-green-300">Real-time</span>
+            </div>
+            <div class="mt-6 space-y-5 text-sm text-slate-300">
+              <div class="flex items-center justify-between">
+                <span>Inbound calls answered</span>
+                <span class="font-semibold text-white">124</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span>Bookings created</span>
+                <span class="font-semibold text-white">86</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span>Missed opportunities saved</span>
+                <span class="font-semibold text-white">31</span>
+              </div>
+            </div>
+            <div class="mt-8 rounded-2xl border border-white/10 bg-slate-950/60 p-5 text-sm text-slate-300">
+              “Seeing how the AI handles deposits and stylist preferences in real time gave our owners total confidence.”
+              <p class="mt-4 text-xs uppercase tracking-wide text-slate-500">Operations Director, Vivid Collective</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-32 grid gap-16 lg:grid-cols-[1.1fr,0.9fr] lg:items-center">
+      <div class="glass rounded-3xl border border-white/10 p-8 shadow-xl">
+        <div class="flex items-center gap-3 text-sm font-semibold text-cyan-200">
+          <i data-lucide="bot-message-square" class="h-5 w-5"></i>
+          Automated guest journeys
+        </div>
+        <h2 class="mt-6 text-3xl font-semibold text-white">Personalized flows for every client scenario</h2>
+        <p class="mt-4 text-lg text-slate-300">Lead capture, pre-appointment prep, membership upsells, and post-visit feedback all handled through one AI receptionist that knows your services.</p>
+        <dl class="mt-8 grid gap-6 md:grid-cols-2">
+          <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-5">
+            <dt class="text-sm text-slate-400">New client onboarding</dt>
+            <dd class="mt-2 text-base text-white">Qualify services, match stylists, collect deposits, and schedule confirmations.</dd>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-5">
+            <dt class="text-sm text-slate-400">Membership retention</dt>
+            <dd class="mt-2 text-base text-white">Automated renewals, perk reminders, and referral pushes that feel human.</dd>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-5">
+            <dt class="text-sm text-slate-400">No-show recovery</dt>
+            <dd class="mt-2 text-base text-white">Re-book lapsed clients with empathetic scripts and flexible offers.</dd>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-slate-950/70 p-5">
+            <dt class="text-sm text-slate-400">Marketing automations</dt>
+            <dd class="mt-2 text-base text-white">Trigger n8n flows for SMS, email, and loyalty programs without manual effort.</dd>
+          </div>
+        </dl>
+      </div>
+      <div class="rounded-3xl border border-white/10 bg-slate-950/60 p-8 shadow-2xl">
+        <div class="flex items-center justify-between text-sm text-slate-400">
+          <span>Response timeline</span>
+          <span>First hour with Empire Automations</span>
+        </div>
+        <ol class="mt-6 space-y-5 text-slate-200">
+          <li class="flex gap-3">
+            <div class="mt-1 h-2 w-2 rounded-full bg-cyan-300"></div>
+            <span><strong>00:00</strong> — AI receptionist answers call, tags service need, captures preferred stylist.</span>
+          </li>
+          <li class="flex gap-3">
+            <div class="mt-1 h-2 w-2 rounded-full bg-indigo-300"></div>
+            <span><strong>00:02</strong> — Availability checked, options texted to client, deposit link issued.</span>
+          </li>
+          <li class="flex gap-3">
+            <div class="mt-1 h-2 w-2 rounded-full bg-purple-300"></div>
+            <span><strong>00:07</strong> — Booking confirmed in Mangomint, follow-up tasks created in your CRM.</span>
+          </li>
+          <li class="flex gap-3">
+            <div class="mt-1 h-2 w-2 rounded-full bg-pink-300"></div>
+            <span><strong>00:30</strong> — Personalized prep guide sent with retail recommendations.</span>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="demo" class="mt-32 rounded-3xl border border-white/10 bg-slate-950/80 p-10 shadow-2xl">
+      <div class="grid gap-12 lg:grid-cols-2">
+        <div>
+          <h2 class="text-3xl font-semibold text-white sm:text-4xl">See Empire Automations in action</h2>
+          <p class="mt-4 text-lg text-slate-300">Book a guided walkthrough to hear the AI receptionist handle real salon scenarios and plug into your existing workflows.</p>
+          <ul class="mt-6 space-y-4 text-sm text-slate-300">
+            <li class="flex gap-3"><i data-lucide="check" class="mt-1 h-5 w-5 text-emerald-300"></i><span>Personalized implementation plan for your locations</span></li>
+            <li class="flex gap-3"><i data-lucide="check" class="mt-1 h-5 w-5 text-emerald-300"></i><span>Turnkey integrations with booking tools, CRMs, and phone systems</span></li>
+            <li class="flex gap-3"><i data-lucide="check" class="mt-1 h-5 w-5 text-emerald-300"></i><span>ROI forecast using your historical call volume</span></li>
+          </ul>
+        </div>
+        <div>
+          <form id="demo-form" class="space-y-6">
+            <div class="grid gap-6 sm:grid-cols-2">
+              <label class="flex flex-col gap-2 text-sm text-slate-200">
+                Full name
+                <input required name="name" autocomplete="name" class="rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 text-base text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50" placeholder="Bianca Flores" />
+              </label>
+              <label class="flex flex-col gap-2 text-sm text-slate-200">
+                Email
+                <input required type="email" name="email" autocomplete="email" class="rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 text-base text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50" placeholder="bianca@glowup.ca" />
+              </label>
+            </div>
+            <div class="grid gap-6 sm:grid-cols-2">
+              <label class="flex flex-col gap-2 text-sm text-slate-200">
+                Phone
+                <input required type="tel" name="phone" autocomplete="tel" pattern="^[0-9+()\-\s]{7,}$" class="rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 text-base text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50" placeholder="(506) 405-3897" />
+              </label>
+              <label class="flex flex-col gap-2 text-sm text-slate-200">
+                Business name
+                <input required name="business" class="rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 text-base text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50" placeholder="GlowUp Salon" />
+              </label>
+            </div>
+            <label class="flex flex-col gap-2 text-sm text-slate-200">
+              Booking system
+              <input required name="booking_system" class="rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 text-base text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50" placeholder="Mangomint" />
+            </label>
+            <label class="flex flex-col gap-2 text-sm text-slate-200">
+              Location(s)
+              <input required name="location" class="rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 text-base text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50" placeholder="Toronto &amp; Vancouver" />
+            </label>
+            <label class="flex flex-col gap-2 text-sm text-slate-200">
+              Notes
+              <textarea name="notes" rows="3" class="rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 text-base text-white placeholder:text-slate-500 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/50" placeholder="Share any volume targets or current phone setup"></textarea>
+            </label>
+            <label class="inline-flex items-center gap-3 text-sm text-slate-300">
+              <input type="checkbox" name="newsletter" value="true" class="h-4 w-4 rounded border border-white/20 bg-slate-900 text-cyan-400 focus:ring-cyan-400" />
+              Keep me updated with launch tips &amp; case studies
+            </label>
+            <input type="text" name="website" aria-hidden="true" autocomplete="off" tabindex="-1" class="hidden" />
+            <div id="turnstile-wrap" class="cf-turnstile" data-sitekey="PASTE_YOUR_TURNSTILE_SITE_KEY" data-theme="dark"></div>
+            <p id="form-message" class="text-sm text-emerald-300" role="status" aria-live="polite"></p>
+            <button type="submit" class="button-primary w-full highlight-ring" data-default-label="Request demo">Request demo</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" class="mt-32">
+      <div class="text-center">
+        <span class="text-sm font-semibold uppercase tracking-wide text-purple-200">Flexible pricing</span>
+        <h2 class="mt-4 text-3xl font-semibold text-white sm:text-4xl">Scale your AI receptionist with your salon</h2>
+      </div>
+      <div class="mt-12 grid gap-8 lg:grid-cols-3">
+        <div class="glass flex flex-col rounded-3xl border border-white/10 p-8 shadow-xl">
+          <h3 class="text-xl font-semibold text-white">Starter</h3>
+          <p class="mt-3 text-sm text-slate-300">Perfect for single-location salons getting started with AI reception.</p>
+          <p class="mt-6 text-4xl font-bold text-white">$399<span class="text-base font-medium text-slate-400">/mo</span></p>
+          <ul class="mt-6 space-y-3 text-sm text-slate-200">
+            <li class="flex gap-2"><i data-lucide="check" class="mt-1 h-4 w-4 text-emerald-300"></i>Voice &amp; SMS coverage</li>
+            <li class="flex gap-2"><i data-lucide="check" class="mt-1 h-4 w-4 text-emerald-300"></i>1 booking integration</li>
+            <li class="flex gap-2"><i data-lucide="check" class="mt-1 h-4 w-4 text-emerald-300"></i>Basic analytics</li>
+          </ul>
+        </div>
+        <div class="glass flex flex-col rounded-3xl border border-indigo-400/60 bg-indigo-500/10 p-8 shadow-2xl">
+          <h3 class="text-xl font-semibold text-white">Growth</h3>
+          <p class="mt-3 text-sm text-slate-200">Our most popular plan for multi-chair or multi-location salons.</p>
+          <p class="mt-6 text-4xl font-bold text-white">$699<span class="text-base font-medium text-slate-400">/mo</span></p>
+          <ul class="mt-6 space-y-3 text-sm text-slate-100">
+            <li class="flex gap-2"><i data-lucide="check" class="mt-1 h-4 w-4 text-emerald-300"></i>Priority routing &amp; escalations</li>
+            <li class="flex gap-2"><i data-lucide="check" class="mt-1 h-4 w-4 text-emerald-300"></i>Multi-location scripting</li>
+            <li class="flex gap-2"><i data-lucide="check" class="mt-1 h-4 w-4 text-emerald-300"></i>Advanced analytics dashboard</li>
+            <li class="flex gap-2"><i data-lucide="check" class="mt-1 h-4 w-4 text-emerald-300"></i>Quarterly optimization workshop</li>
+          </ul>
+          <a href="#demo" class="mt-8 inline-flex justify-center rounded-full border border-white/20 px-5 py-2 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/5 highlight-ring">Request pricing breakdown</a>
+        </div>
+        <div class="glass flex flex-col rounded-3xl border border-white/10 p-8 shadow-xl">
+          <h3 class="text-xl font-semibold text-white">Enterprise</h3>
+          <p class="mt-3 text-sm text-slate-300">Custom implementations for franchises and national salon groups.</p>
+          <p class="mt-6 text-4xl font-bold text-white">Custom</p>
+          <ul class="mt-6 space-y-3 text-sm text-slate-200">
+            <li class="flex gap-2"><i data-lucide="check" class="mt-1 h-4 w-4 text-emerald-300"></i>Dedicated success team</li>
+            <li class="flex gap-2"><i data-lucide="check" class="mt-1 h-4 w-4 text-emerald-300"></i>SLA-backed uptime</li>
+            <li class="flex gap-2"><i data-lucide="check" class="mt-1 h-4 w-4 text-emerald-300"></i>White-glove onboarding</li>
+            <li class="flex gap-2"><i data-lucide="check" class="mt-1 h-4 w-4 text-emerald-300"></i>Bespoke integrations</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-32">
+      <div class="text-center">
+        <span class="text-sm font-semibold uppercase tracking-wide text-cyan-300">Trusted by salon operators</span>
+        <h2 class="mt-4 text-3xl font-semibold text-white sm:text-4xl">Testimonials</h2>
+      </div>
+      <div class="mt-12 grid gap-8 md:grid-cols-3">
+        <div class="glass rounded-3xl border border-white/10 p-6 text-sm text-slate-200">
+          <p class="text-lg font-semibold text-white">“Empire Automations doubled our rebooking rate.”</p>
+          <p class="mt-4 text-slate-300">“The AI books clients faster than we ever could. Our stylists stay focused on the chair.”</p>
+          <p class="mt-5 text-xs uppercase tracking-wide text-slate-500">— Priya, Founder of UrbanGlow Studios</p>
+        </div>
+        <div class="glass rounded-3xl border border-white/10 p-6 text-sm text-slate-200">
+          <p class="text-lg font-semibold text-white">“Seamless with Mangomint.”</p>
+          <p class="mt-4 text-slate-300">“It feels like the AI was trained on our exact scripts. Zero drop-off when clients call.”</p>
+          <p class="mt-5 text-xs uppercase tracking-wide text-slate-500">— Caleb, Director at Apex Colour Lab</p>
+        </div>
+        <div class="glass rounded-3xl border border-white/10 p-6 text-sm text-slate-200">
+          <p class="text-lg font-semibold text-white">“24/7 coverage without extra payroll.”</p>
+          <p class="mt-4 text-slate-300">“Our owners sleep easy knowing every call is answered and logged in n8n.”</p>
+          <p class="mt-5 text-xs uppercase tracking-wide text-slate-500">— Melissa, COO at Velvet &amp; Vines</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="mt-32">
+      <div class="text-center">
+        <span class="text-sm font-semibold uppercase tracking-wide text-purple-200">FAQ</span>
+        <h2 class="mt-4 text-3xl font-semibold text-white sm:text-4xl">Answers for salon operators</h2>
+      </div>
+      <div class="mt-12 space-y-6">
+        <details class="group rounded-2xl border border-white/10 bg-slate-950/60 p-6">
+          <summary class="flex cursor-pointer items-center justify-between text-lg font-semibold text-white">
+            How quickly can we launch?
+            <i data-lucide="chevron-down" class="h-5 w-5 transition-transform group-open:rotate-180"></i>
+          </summary>
+          <p class="mt-4 text-sm text-slate-300">Most salons go live in 7 days. We import scripts, connect your phone lines, and run shadow mode before taking over.</p>
+        </details>
+        <details class="group rounded-2xl border border-white/10 bg-slate-950/60 p-6">
+          <summary class="flex cursor-pointer items-center justify-between text-lg font-semibold text-white">
+            Does it support bilingual callers?
+            <i data-lucide="chevron-down" class="h-5 w-5 transition-transform group-open:rotate-180"></i>
+          </summary>
+          <p class="mt-4 text-sm text-slate-300">Yes. Empire Automations detects caller language and switches scripts instantly for English, French, and Spanish.</p>
+        </details>
+        <details class="group rounded-2xl border border-white/10 bg-slate-950/60 p-6">
+          <summary class="flex cursor-pointer items-center justify-between text-lg font-semibold text-white">
+            Can we escalate to a human?
+            <i data-lucide="chevron-down" class="h-5 w-5 transition-transform group-open:rotate-180"></i>
+          </summary>
+          <p class="mt-4 text-sm text-slate-300">Absolutely. When the AI detects edge cases, it routes the conversation to your team or books a callback.</p>
+        </details>
+        <details class="group rounded-2xl border border-white/10 bg-slate-950/60 p-6">
+          <summary class="flex cursor-pointer items-center justify-between text-lg font-semibold text-white">
+            How is data secured?
+            <i data-lucide="chevron-down" class="h-5 w-5 transition-transform group-open:rotate-180"></i>
+          </summary>
+          <p class="mt-4 text-sm text-slate-300">All transcripts are encrypted at rest, Turnstile protects against bots, and the worker proxy hides your n8n workflows.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="mt-32 rounded-3xl border border-white/10 bg-gradient-to-br from-indigo-500/20 via-slate-950/80 to-cyan-500/10 p-10 text-center shadow-2xl">
+      <h2 class="text-3xl font-semibold text-white sm:text-4xl">Ready to reclaim missed revenue?</h2>
+      <p class="mt-4 text-lg text-slate-200">Let Empire Automations answer every call, qualify leads, and book your most profitable services automatically.</p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+        <a href="#demo" class="button-primary highlight-ring">Book your strategy session</a>
+        <a href="tel:+15064053897" class="inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-2 text-sm font-semibold text-white transition hover:border-white/50 hover:bg-white/10 highlight-ring">
+          <i data-lucide="phone" class="h-4 w-4"></i>
+          Call +1 (506) 405-3897
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-white/10 bg-slate-950/80">
+    <div class="mx-auto flex max-w-7xl flex-col gap-6 px-6 py-10 text-sm text-slate-400 lg:flex-row lg:items-center lg:justify-between lg:px-12">
+      <div>
+        <p class="text-base font-semibold text-white">Empire Automations</p>
+        <p class="mt-1">AI Receptionist for Salons</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-4">
+        <a href="#demo" class="text-slate-300 transition hover:text-white highlight-ring">Request demo</a>
+        <a href="tel:+15064053897" class="text-slate-300 transition hover:text-white highlight-ring">Call us</a>
+        <p class="text-xs text-slate-500">© <span id="year"></span> Empire Automations. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="video-modal" class="fixed inset-0 z-[999] hidden items-center justify-center bg-black/80 p-6" role="dialog" aria-modal="true" aria-labelledby="video-modal-title">
+    <div class="relative w-full max-w-4xl rounded-3xl bg-slate-950 shadow-2xl">
+      <button id="close-modal" class="absolute right-4 top-4 rounded-full border border-white/20 bg-white/5 p-2 text-white transition hover:bg-white/10 highlight-ring" aria-label="Close video">
+        <i data-lucide="x" class="h-5 w-5"></i>
+      </button>
+      <div class="aspect-video w-full overflow-hidden rounded-3xl">
+        <iframe id="video-frame" class="h-full w-full" src="" title="Empire Automations demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <h3 id="video-modal-title" class="sr-only">Empire Automations demo video</h3>
+    </div>
+  </div>
+
+  <script>
+    let mobileMenuOpen = false;
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    let mobileMenuFirstLink = null;
+    if (mobileMenu) {
+      mobileMenuFirstLink = mobileMenu.querySelector('a');
+    }
+
+    function toggleMobileMenu(open) {
+      mobileMenuOpen = typeof open === 'boolean' ? open : !mobileMenuOpen;
+      if (!mobileMenu) return;
+      if (mobileMenuOpen) {
+        mobileMenu.hidden = false;
+        mobileMenuButton.setAttribute('aria-expanded', 'true');
+        setTimeout(() => mobileMenuFirstLink && mobileMenuFirstLink.focus(), 0);
+      } else {
+        mobileMenu.hidden = true;
+        mobileMenuButton.setAttribute('aria-expanded', 'false');
+        mobileMenuButton.focus();
+      }
+    }
+
+    mobileMenuButton?.addEventListener('click', () => toggleMobileMenu());
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        if (mobileMenuOpen) {
+          toggleMobileMenu(false);
+        }
+        if (!videoModal.classList.contains('hidden')) {
+          closeVideoModal();
+        }
+      }
+    });
+
+    document.addEventListener('click', (event) => {
+      if (mobileMenuOpen && mobileMenu && !mobileMenu.contains(event.target) && event.target !== mobileMenuButton) {
+        toggleMobileMenu(false);
+      }
+    });
+
+    const videoModal = document.getElementById('video-modal');
+    const watchDemoBtn = document.getElementById('watch-demo');
+    const closeModalBtn = document.getElementById('close-modal');
+    const videoFrame = document.getElementById('video-frame');
+    let lastFocusedElement = null;
+
+    function openVideoModal() {
+      lastFocusedElement = document.activeElement;
+      videoModal.classList.remove('hidden');
+      videoModal.classList.add('flex');
+      videoFrame.setAttribute('src', APP_CONFIG.DEMO_VIDEO_URL + '?autoplay=1');
+      closeModalBtn.focus();
+    }
+
+    function closeVideoModal() {
+      videoModal.classList.add('hidden');
+      videoModal.classList.remove('flex');
+      videoFrame.setAttribute('src', '');
+      if (lastFocusedElement) {
+        lastFocusedElement.focus();
+      }
+    }
+
+    watchDemoBtn?.addEventListener('click', (event) => {
+      event.preventDefault();
+      openVideoModal();
+    });
+
+    closeModalBtn?.addEventListener('click', () => closeVideoModal());
+
+    videoModal?.addEventListener('click', (event) => {
+      if (event.target === videoModal) {
+        closeVideoModal();
+      }
+    });
+
+    const focusableModalElements = () => Array.from(videoModal.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])'));
+
+    videoModal?.addEventListener('keydown', (event) => {
+      if (event.key === 'Tab') {
+        const focusable = focusableModalElements();
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    });
+
+    const yearEl = document.getElementById('year');
+    if (yearEl) {
+      yearEl.textContent = new Date().getFullYear();
+    }
+
+    let turnstileToken = null;
+    window.onload = function () {
+      if (window.turnstile) {
+        turnstile.render('#turnstile-wrap', {
+          sitekey: APP_CONFIG.TURNSTILE_SITE_KEY,
+          theme: 'dark',
+          callback: (token) => {
+            turnstileToken = token;
+          },
+          'expired-callback': () => {
+            turnstileToken = null;
+          },
+          'error-callback': () => {
+            turnstileToken = null;
+          },
+        });
+      }
+    };
+
+    const form = document.getElementById('demo-form');
+    const messageEl = document.getElementById('form-message');
+    const submitButton = form?.querySelector('button[type="submit"]');
+
+    function setFormState({ loading = false, message = '', type = 'success' }) {
+      if (submitButton) {
+        submitButton.disabled = loading;
+        const defaultLabel = submitButton.getAttribute('data-default-label') || 'Submit';
+        submitButton.textContent = loading ? 'Sending…' : defaultLabel;
+      }
+      if (messageEl) {
+        messageEl.textContent = message;
+        messageEl.className = 'text-sm ' + (type === 'error' ? 'text-rose-300' : 'text-emerald-300');
+      }
+    }
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!turnstileToken) {
+        setFormState({ message: 'Please complete the bot check.', type: 'error' });
+        return;
+      }
+
+      const formData = new FormData(form);
+      const payload = Object.fromEntries(formData.entries());
+      payload.newsletter = formData.get('newsletter') === 'true';
+      payload['cf-turnstile-response'] = turnstileToken;
+
+      setFormState({ loading: true, message: '' });
+
+      try {
+        const response = await fetch(APP_CONFIG.SUBMIT_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok || data.ok === false) {
+          throw new Error(data.message || 'Unable to submit your request right now.');
+        }
+
+        setFormState({ message: 'Thanks! We will reach out within one business day.', type: 'success' });
+        form.reset();
+        turnstileToken = null;
+        if (window.turnstile) {
+          turnstile.reset('#turnstile-wrap');
+        }
+      } catch (error) {
+        setFormState({ message: error.message || 'Submission failed. Try again soon.', type: 'error' });
+      } finally {
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = submitButton.getAttribute('data-default-label') || 'Submit';
+        }
+      }
+    });
+
+    const initIcons = () => {
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+    };
+
+    if (window.lucide) {
+      initIcons();
+    } else {
+      document.addEventListener('lucide:load', initIcons);
+    }
+  </script>
+</body>
+</html>
