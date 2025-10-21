@@ -1,17 +1,17 @@
 export default {
   async fetch(request, env, ctx) {
-    const cors = {
-      "Access-Control-Allow-Origin": env.ALLOWED_ORIGIN,
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
-      "Vary": "Origin",
-    };
+    const { cors, isAllowedOrigin } = resolveCors(request, env);
 
     if (request.method === "OPTIONS") {
-      return new Response(null, { status: 204, headers: cors });
+      const status = isAllowedOrigin ? 204 : 403;
+      return new Response(null, { status, headers: cors });
     }
     if (request.method !== "POST") {
       return json({ message: "Method not allowed" }, 405, cors);
+    }
+
+    if (!isAllowedOrigin) {
+      return json({ message: "Origin not allowed" }, 403, cors);
     }
 
     // Basic IP rate limit
@@ -29,20 +29,6 @@ export default {
       return json({ ok: true }, 200, cors);
     }
 
-    const token = payload["cf-turnstile-response"];
-    if (!token) return json({ message: "Missing bot verification" }, 400, cors);
-
-    // Verify Turnstile
-    const fd = new FormData();
-    fd.append("secret", env.TURNSTILE_SECRET);
-    fd.append("response", token);
-    fd.append("remoteip", ip);
-
-    const tsResp = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", { method: "POST", body: fd });
-    const tsData = await tsResp.json();
-    if (!tsData.success) return json({ message: "Bot verification failed" }, 403, cors);
-
-    delete payload["cf-turnstile-response"];
     payload._meta = {
       ip,
       ua: request.headers.get("User-Agent") || "",
@@ -71,6 +57,34 @@ export default {
     return json({ ok: true }, 200, cors);
   }
 };
+
+function resolveCors(request, env) {
+  const origin = request.headers.get("Origin");
+  const allowList = (env.ALLOWED_ORIGIN || "")
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean);
+
+  let isAllowedOrigin = true;
+
+  if (allowList.length && !allowList.includes("*")) {
+    if (!origin || !allowList.includes(origin)) {
+      isAllowedOrigin = false;
+    }
+  }
+
+  const allowedOriginHeader = origin || (allowList.includes("*") ? "*" : allowList[0] || "*");
+
+  return {
+    cors: {
+      "Access-Control-Allow-Origin": allowedOriginHeader,
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Vary": "Origin",
+    },
+    isAllowedOrigin,
+  };
+}
 
 function json(obj, status, headers) {
   return new Response(JSON.stringify(obj), { status, headers: { "Content-Type": "application/json", ...(headers || {}) }});

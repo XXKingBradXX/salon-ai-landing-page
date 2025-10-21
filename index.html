@@ -16,17 +16,26 @@
   <meta name="twitter:title" content="Empire Automations — AI Receptionist for Salons" />
   <meta name="twitter:description" content="AI receptionist that books salon appointments and handles client communication round-the-clock." />
   <meta name="twitter:image" content="https://www.empireautom.org/assets/og-image.jpg" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.4/dist/tailwind.min.css" integrity="sha384-I1YgJWO/auNHfjlXMUl3tXQVy77qZGAf9hcz7h7H5b16PnfhXlBx/6CkXbkqVKgf" crossorigin="anonymous">
-  <script src="https://unpkg.com/lucide@latest" defer></script>
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind (CDN) FIRST -->
   <script>
-    const APP_CONFIG = {
-      DEMO_VIDEO_URL: "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ",
-      TURNSTILE_SITE_KEY: "﻿﻿﻿﻿0x4AAAAAAB771F457k4Zdex3",
-      SUBMIT_URL: "https://www.empireautom.org/api/lead",
+    // Optional Tailwind config
+    window.tailwind = { config: { theme: { extend: {} } } };
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+
+  <!-- App config -->
+  <script>
+    window.APP_CONFIG = {
+      DEMO_VIDEO_URL: "",
+      TURNSTILE_SITE_KEY: "",
+      SUBMIT_URL: "https://www.empireautom.org/api/lead"
     };
   </script>
   <script type="application/ld+json">
@@ -433,7 +442,6 @@
               Keep me updated with launch tips &amp; case studies
             </label>
             <input type="text" name="website" aria-hidden="true" autocomplete="off" tabindex="-1" class="hidden" />
-            <div id="turnstile-wrap" class="cf-turnstile" data-sitekey="PASTE_YOUR_TURNSTILE_SITE_KEY" data-theme="dark"></div>
             <p id="form-message" class="text-sm text-emerald-300" role="status" aria-live="polite"></p>
             <button type="submit" class="button-primary w-full highlight-ring" data-default-label="Request demo">Request demo</button>
           </form>
@@ -539,7 +547,7 @@
             How is data secured?
             <i data-lucide="chevron-down" class="h-5 w-5 transition-transform group-open:rotate-180"></i>
           </summary>
-          <p class="mt-4 text-sm text-slate-300">All transcripts are encrypted at rest, Turnstile protects against bots, and the worker proxy hides your n8n workflows.</p>
+          <p class="mt-4 text-sm text-slate-300">All transcripts are encrypted at rest, honeypot fields deter bots, and the worker proxy hides your n8n workflows.</p>
         </details>
       </div>
     </section>
@@ -584,6 +592,10 @@
   </div>
 
   <script>
+    const APP_CONFIG = window.APP_CONFIG || {};
+    const DEMO_VIDEO_URL = APP_CONFIG.DEMO_VIDEO_URL || '';
+    const SUBMIT_URL = APP_CONFIG.SUBMIT_URL || 'https://www.empireautom.org/api/lead';
+
     let mobileMenuOpen = false;
     const mobileMenu = document.getElementById('mobile-menu');
     const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -635,23 +647,37 @@
       lastFocusedElement = document.activeElement;
       videoModal.classList.remove('hidden');
       videoModal.classList.add('flex');
-      videoFrame.setAttribute('src', APP_CONFIG.DEMO_VIDEO_URL + '?autoplay=1');
-      closeModalBtn.focus();
+      if (videoFrame && DEMO_VIDEO_URL) {
+        videoFrame.setAttribute('src', `${DEMO_VIDEO_URL}?autoplay=1`);
+      }
+      closeModalBtn?.focus();
     }
 
     function closeVideoModal() {
       videoModal.classList.add('hidden');
       videoModal.classList.remove('flex');
-      videoFrame.setAttribute('src', '');
+      if (videoFrame) {
+        videoFrame.setAttribute('src', '');
+      }
       if (lastFocusedElement) {
         lastFocusedElement.focus();
       }
     }
 
-    watchDemoBtn?.addEventListener('click', (event) => {
-      event.preventDefault();
-      openVideoModal();
-    });
+    if (watchDemoBtn) {
+      if (DEMO_VIDEO_URL) {
+        watchDemoBtn.addEventListener('click', (event) => {
+          event.preventDefault();
+          openVideoModal();
+        });
+      } else {
+        console.info('[UI] Demo video URL not configured; hiding watch button.');
+        watchDemoBtn.setAttribute('aria-hidden', 'true');
+        watchDemoBtn.setAttribute('tabindex', '-1');
+        watchDemoBtn.classList.add('hidden');
+        watchDemoBtn.style.display = 'none';
+      }
+    }
 
     closeModalBtn?.addEventListener('click', () => closeVideoModal());
 
@@ -684,25 +710,6 @@
       yearEl.textContent = new Date().getFullYear();
     }
 
-    let turnstileToken = null;
-    window.onload = function () {
-      if (window.turnstile) {
-        turnstile.render('#turnstile-wrap', {
-          sitekey: APP_CONFIG.TURNSTILE_SITE_KEY,
-          theme: 'dark',
-          callback: (token) => {
-            turnstileToken = token;
-          },
-          'expired-callback': () => {
-            turnstileToken = null;
-          },
-          'error-callback': () => {
-            turnstileToken = null;
-          },
-        });
-      }
-    };
-
     const form = document.getElementById('demo-form');
     const messageEl = document.getElementById('form-message');
     const submitButton = form?.querySelector('button[type="submit"]');
@@ -721,20 +728,14 @@
 
     form?.addEventListener('submit', async (event) => {
       event.preventDefault();
-      if (!turnstileToken) {
-        setFormState({ message: 'Please complete the bot check.', type: 'error' });
-        return;
-      }
-
       const formData = new FormData(form);
       const payload = Object.fromEntries(formData.entries());
       payload.newsletter = formData.get('newsletter') === 'true';
-      payload['cf-turnstile-response'] = turnstileToken;
 
       setFormState({ loading: true, message: '' });
 
       try {
-        const response = await fetch(APP_CONFIG.SUBMIT_URL, {
+        const response = await fetch(SUBMIT_URL, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -749,10 +750,6 @@
 
         setFormState({ message: 'Thanks! We will reach out within one business day.', type: 'success' });
         form.reset();
-        turnstileToken = null;
-        if (window.turnstile) {
-          turnstile.reset('#turnstile-wrap');
-        }
       } catch (error) {
         setFormState({ message: error.message || 'Submission failed. Try again soon.', type: 'error' });
       } finally {
@@ -762,18 +759,55 @@
         }
       }
     });
-
-    const initIcons = () => {
-      if (window.lucide) {
-        window.lucide.createIcons();
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      try {
+        window.lucide && window.lucide.createIcons();
+      } catch (e) {
+        console.warn('Lucide init failed', e);
       }
-    };
+    });
+  </script>
+  <script>
+    (function () {
+      const probe = document.createElement('div');
+      probe.className = 'p-4';
+      document.body.appendChild(probe);
+      const hasTW = getComputedStyle(probe).paddingTop !== '0px';
+      document.body.removeChild(probe);
 
-    if (window.lucide) {
-      initIcons();
-    } else {
-      document.addEventListener('lucide:load', initIcons);
-    }
+      if (!hasTW) {
+        console.warn('[UI] Tailwind seems blocked. Injecting fallback styles.');
+        const css = `
+      :root{color-scheme:dark}
+      html,body{margin:0;padding:0;background:#0A0A0A;color:#E2E8F0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif}
+      .container{max-width:1200px;margin:0 auto}
+      a{color:#a5b4fc}
+      .btn{display:inline-block;background:#4f46e5;color:#fff;padding:.875rem 1.25rem;border-radius:.75rem;font-weight:600;text-decoration:none}
+      header{position:sticky;top:0;background:rgba(0,0,0,.3);backdrop-filter:blur(10px);z-index:50}
+      .hero-gradient{background: radial-gradient(circle at 50% 30%, rgba(58,12,163,0.25), transparent 70%)}
+      .feature-card{border:1px solid rgba(255,255,255,.1);background:rgba(15,23,42,.5);border-radius:.75rem;padding:1.25rem}
+      .cta-button{transition:all .2s ease} .cta-button:hover{transform:translateY(-2px);box-shadow:0 0 25px rgba(99,102,241,.45)}
+      /* spacing shims used widely in markup */
+      .px-6{padding-left:1.5rem;padding-right:1.5rem} .py-4{padding-top:1rem;padding-bottom:1rem}
+      .pt-32{padding-top:8rem} .pb-20{padding-bottom:5rem}
+      .text-center{text-align:center} .text-white{color:#fff}
+      .bg-black{background:#000} .bg-slate-900{background:#0f172a}
+      .border{border:1px solid rgba(148,163,184,.2)} .rounded-lg{border-radius:.75rem}
+      /* typography hints */
+      h1,h2,h3{color:#fff}
+      h1{font-size:2.25rem;line-height:1.15} h2{font-size:1.875rem} h3{font-size:1.25rem}
+    `;
+        const style = document.createElement('style');
+        style.textContent = css;
+        document.head.appendChild(style);
+
+        document.querySelectorAll('a.bg-indigo-600, button.bg-indigo-600').forEach((el) => {
+          el.classList.add('btn');
+        });
+      }
+    })();
   </script>
 </body>
 </html>
