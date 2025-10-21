@@ -1,20 +1,12 @@
 # Empire Automations Salon AI Landing Page
 
-A production-ready marketing landing page for Empire Automations' “AI Receptionist for Salons” offering. It includes a secure Cloudflare Worker proxy protected by Turnstile to forward demo requests to n8n without exposing the underlying webhook.
+A production-ready marketing landing page for Empire Automations' “AI Receptionist for Salons” offering. It includes a secure Cloudflare Worker proxy to forward demo requests to n8n without exposing the underlying webhook.
 
 ## Prerequisites
 
-- Cloudflare account with access to Workers and Turnstile
-- Turnstile site key and secret key for `empireautom.org`
+- Cloudflare account with access to Workers
 - [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/install-and-update/) installed locally (`npm install -g wrangler`)
 - Hosting option for the static landing page (Cloudflare Pages, GitHub Pages, or existing hosting)
-
-## Getting Turnstile keys
-
-1. Sign in to the Cloudflare dashboard.
-2. Navigate to **Turnstile** and click **Add site**.
-3. Set the domain to `empireautom.org`, choose the widget type, and create the site.
-4. Copy the generated **Site Key** and **Secret Key**.
 
 ## Project structure
 
@@ -29,8 +21,7 @@ README.md                 # This file
 ## Configure the landing page
 
 1. Open `index.html`.
-2. Replace the placeholder Turnstile site key (`PASTE_YOUR_TURNSTILE_SITE_KEY`) with your real site key from the Turnstile dashboard.
-3. Host `index.html` at `https://www.empireautom.org/landing-page` using Cloudflare Pages or your preferred static hosting service.
+2. Host `index.html` at `https://www.empireautom.org/landing-page` using Cloudflare Pages or your preferred static hosting service.
 
 ## Deploy the Cloudflare Worker proxy
 
@@ -40,10 +31,8 @@ README.md                 # This file
    ```
 2. Set the secrets required by the worker:
    ```bash
-   wrangler secret put TURNSTILE_SECRET
    wrangler secret put N8N_WEBHOOK_URL
    ```
-   - Paste the Turnstile **Secret Key** when prompted for `TURNSTILE_SECRET`.
    - Paste `https://n8n.empireautom.org/webhook-test/424f7cfd-5ed8-42b8-9382-4ac54e832174` when prompted for `N8N_WEBHOOK_URL`.
 3. Deploy the worker:
    ```bash
@@ -57,11 +46,16 @@ To test the worker locally with Wrangler:
 ```bash
 wrangler dev workers/lead-proxy/worker.js
 ```
-The dev server will expose the `/api/lead` endpoint for local testing. Use a tool such as `curl` or `httpie` to simulate requests with a valid Turnstile token.
+The dev server will expose the `/api/lead` endpoint for local testing. Use a tool such as `curl` or `httpie` to simulate requests.
+
+## Troubleshooting on Cloudflare Pages
+
+- In **Pages → Project → Settings → Functions & Build**, ensure no transforms or optimizations reorder or strip `<script>` tags.
+- In the Cloudflare dashboard, disable **Rocket Loader** for `landingpage.empireautom.org` if it inherits the zone setting.
+- If global **Auto-Minify** (HTML/JS) is enabled, add a Page Rule (or Ruleset) to exclude `landingpage.empireautom.org/*` or choose **Disable Performance** for this hostname so script execution order is preserved.
 
 ## Testing checklist
 
-- Turnstile widget is required before submission; incomplete verification returns a helpful error message.
 - Form submission hits `https://www.empireautom.org/api/lead` and responds with `{ "ok": true }` on success.
 - Response headers include `Access-Control-Allow-Origin: https://www.empireautom.org`.
 - Rapid submissions (20+ within 60 seconds) from the same IP return HTTP 429 rate-limit responses.
@@ -72,4 +66,4 @@ The dev server will expose the `/api/lead` endpoint for local testing. Use a too
 
 - Update marketing copy or sections directly in `index.html`.
 - Adjust rate-limiting thresholds or CORS behaviour inside `workers/lead-proxy/worker.js` if your requirements change.
-- When rotating Turnstile keys or n8n webhook URLs, update the corresponding secret using `wrangler secret put` and redeploy.
+- When rotating n8n webhook URLs, update the corresponding secret using `wrangler secret put` and redeploy.
