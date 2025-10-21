@@ -23,6 +23,8 @@ README.md                 # This file
 1. Open `index.html`.
    - `window.APP_CONFIG` exposes `DEMO_VIDEO_URL`, `TURNSTILE_SITE_KEY` (left blank while bot checks are disabled), and `SUBMIT_URL`.
 2. Host `index.html` at `https://www.empireautom.org/landing-page` using Cloudflare Pages or your preferred static hosting service.
+2. Confirm the Turnstile site key in `index.html` is set to `0x4AAAAAAB771F457k4Zdex3` (update it here if you rotate keys in the Turnstile dashboard).
+3. Host `index.html` at `https://www.empireautom.org/landing-page` using Cloudflare Pages or your preferred static hosting service.
 
 ## Deploy the Cloudflare Worker proxy
 
@@ -48,6 +50,12 @@ To test the worker locally with Wrangler:
 wrangler dev workers/lead-proxy/worker.js
 ```
 The dev server will expose the `/api/lead` endpoint for local testing. Use a tool such as `curl` or `httpie` to simulate requests.
+
+## Troubleshooting on Cloudflare Pages
+
+- In **Pages → Project → Settings → Functions & Build**, ensure no transforms or optimizations reorder or strip `<script>` tags.
+- In the Cloudflare dashboard, disable **Rocket Loader** for `landingpage.empireautom.org` if it inherits the zone setting.
+- If global **Auto-Minify** (HTML/JS) is enabled, add a Page Rule (or Ruleset) to exclude `landingpage.empireautom.org/*` or choose **Disable Performance** for this hostname so script execution order is preserved.
 
 ## Troubleshooting on Cloudflare Pages
 
