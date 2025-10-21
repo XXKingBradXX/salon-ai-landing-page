@@ -6,20 +6,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Empire Automations — AI Receptionist for Salons</title>
   <meta name="description" content="Empire Automations delivers an AI receptionist built for salons. Capture leads instantly, automate bookings, and delight every caller 24/7." />
-  <link rel="canonical" href="https://www.empireautom.org/landing-page" />
+  <link rel="canonical" href="https://landingpage.empireautom.org" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Empire Automations — AI Receptionist for Salons" />
   <meta property="og:description" content="Capture salon leads automatically with our AI receptionist. Book appointments, answer FAQs, and follow-up without lifting a finger." />
-  <meta property="og:url" content="https://www.empireautom.org/landing-page" />
-  <meta property="og:image" content="https://www.empireautom.org/assets/og-image.jpg" />
+  <meta property="og:url" content="https://landingpage.empireautom.org" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&amp;fit=crop&amp;w=1200&amp;h=630&amp;q=80" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Empire Automations — AI Receptionist for Salons" />
   <meta name="twitter:description" content="AI receptionist that books salon appointments and handles client communication round-the-clock." />
-  <meta name="twitter:image" content="https://www.empireautom.org/assets/og-image.jpg" />
+  <meta name="twitter:url" content="https://landingpage.empireautom.org" />
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&amp;fit=crop&amp;w=1200&amp;h=630&amp;q=80" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.4/dist/tailwind.min.css" integrity="sha384-I1YgJWO/auNHfjlXMUl3tXQVy77qZGAf9hcz7h7H5b16PnfhXlBx/6CkXbkqVKgf" crossorigin="anonymous">
+  <script>
+    // Optional Tailwind config before CDN load
+    window.tailwind = { config: { theme: { extend: {} } } };
+  </script>
+  <!-- For a future build step, replace the CDN with a compiled Tailwind CSS output (e.g., run Tailwind CLI via npm run build to generate /tailwind.css with @tailwind directives and include that stylesheet instead). -->
+  <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest" defer></script>
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script>
@@ -34,11 +40,11 @@
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": "Empire Automations — AI Receptionist",
-      "url": "https://www.empireautom.org/landing-page",
+      "url": "https://landingpage.empireautom.org",
       "telephone": "+15064053897",
       "areaServed": ["Canada", "United States"],
       "description": "AI receptionist that books salon appointments automatically.",
-      "image": "https://www.empireautom.org/assets/og-image.jpg"
+      "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&h=630&q=80"
     }
   </script>
   <style>
@@ -774,6 +780,27 @@
     } else {
       document.addEventListener('lucide:load', initIcons);
     }
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      if (window.lucide?.createIcons) window.lucide.createIcons();
+    });
+  </script>
+  <script>
+    (function () {
+      try {
+        const probe = document.createElement('div');
+        probe.className = 'p-4';
+        document.body.appendChild(probe);
+        const hasPadding = getComputedStyle(probe).paddingTop !== '0px';
+        document.body.removeChild(probe);
+        if (!hasPadding) {
+          console.warn('[UI] Tailwind appears not to be applied. Check CDN load/CSP.');
+        }
+      } catch (e) {
+        console.warn('[UI] Tailwind probe failed:', e);
+      }
+    })();
   </script>
 </body>
 </html>
