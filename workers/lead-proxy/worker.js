@@ -29,8 +29,6 @@ export default {
       return json({ ok: true }, 200, cors);
     }
 
-    // Drop legacy bot-check payloads if older clients still submit them
-    delete payload["cf-turnstile-response"];
     payload._meta = {
       ip,
       ua: request.headers.get("User-Agent") || "",

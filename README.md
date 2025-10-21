@@ -21,6 +21,7 @@ README.md                 # This file
 ## Configure the landing page
 
 1. Open `index.html`.
+   - `window.APP_CONFIG` exposes `DEMO_VIDEO_URL`, `TURNSTILE_SITE_KEY` (left blank while bot checks are disabled), and `SUBMIT_URL`.
 2. Host `index.html` at `https://www.empireautom.org/landing-page` using Cloudflare Pages or your preferred static hosting service.
 
 ## Deploy the Cloudflare Worker proxy
