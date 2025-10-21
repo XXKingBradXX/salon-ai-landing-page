@@ -1,0 +1,6 @@
+/*
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self' https://www.empireautom.org; img-src 'self' data: https:; font-src https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://challenges.cloudflare.com https://www.youtube-nocookie.com; connect-src 'self' https://www.empireautom.org https://challenges.cloudflare.com; frame-src https://www.youtube-nocookie.com; worker-src 'self'; upgrade-insecure-requests
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  X-XSS-Protection: 0
