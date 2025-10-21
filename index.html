@@ -30,11 +30,15 @@
   <!-- Icons -->
   <script src="https://unpkg.com/lucide@latest" defer></script>
 
+  <!-- Turnstile -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
   <!-- App config -->
   <script>
     window.APP_CONFIG = {
       DEMO_VIDEO_URL: "",
       TURNSTILE_SITE_KEY: "",
+      TURNSTILE_SITE_KEY: "0x4AAAAAAB771F457k4Zdex3",
       SUBMIT_URL: "https://www.empireautom.org/api/lead"
     };
   </script>
@@ -442,6 +446,7 @@
               Keep me updated with launch tips &amp; case studies
             </label>
             <input type="text" name="website" aria-hidden="true" autocomplete="off" tabindex="-1" class="hidden" />
+            <div id="turnstile-wrap" class="cf-turnstile" data-sitekey="0x4AAAAAAB771F457k4Zdex3" data-theme="dark"></div>
             <p id="form-message" class="text-sm text-emerald-300" role="status" aria-live="polite"></p>
             <button type="submit" class="button-primary w-full highlight-ring" data-default-label="Request demo">Request demo</button>
           </form>
@@ -593,7 +598,9 @@
 
   <script>
     const APP_CONFIG = window.APP_CONFIG || {};
+    const turnstileElement = document.getElementById('turnstile-wrap');
     const DEMO_VIDEO_URL = APP_CONFIG.DEMO_VIDEO_URL || '';
+    const TURNSTILE_SITE_KEY = APP_CONFIG.TURNSTILE_SITE_KEY || turnstileElement?.dataset.sitekey || '';
     const SUBMIT_URL = APP_CONFIG.SUBMIT_URL || 'https://www.empireautom.org/api/lead';
 
     let mobileMenuOpen = false;
@@ -710,6 +717,25 @@
       yearEl.textContent = new Date().getFullYear();
     }
 
+    let turnstileToken = null;
+    window.addEventListener('load', () => {
+      if (window.turnstile && TURNSTILE_SITE_KEY) {
+        window.turnstile.render('#turnstile-wrap', {
+          sitekey: TURNSTILE_SITE_KEY,
+          theme: 'dark',
+          callback: (token) => {
+            turnstileToken = token;
+          },
+          'expired-callback': () => {
+            turnstileToken = null;
+          },
+          'error-callback': () => {
+            turnstileToken = null;
+          },
+        });
+      }
+    });
+
     const form = document.getElementById('demo-form');
     const messageEl = document.getElementById('form-message');
     const submitButton = form?.querySelector('button[type="submit"]');
@@ -750,6 +776,10 @@
 
         setFormState({ message: 'Thanks! We will reach out within one business day.', type: 'success' });
         form.reset();
+        turnstileToken = null;
+        if (window.turnstile) {
+          window.turnstile.reset('#turnstile-wrap');
+        }
       } catch (error) {
         setFormState({ message: error.message || 'Submission failed. Try again soon.', type: 'error' });
       } finally {
