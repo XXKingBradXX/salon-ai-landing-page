@@ -3,7 +3,7 @@ main = "workers/lead-proxy/worker.js"
 compatibility_date = "2024-10-01"
 
 [vars]
-ALLOWED_ORIGIN = "https://www.empireautom.org"
+ALLOWED_ORIGIN = "https://www.empireautom.org,https://landingpage.empireautom.org"
 
 routes = [
   { pattern = "www.empireautom.org/api/lead", zone_name = "empireautom.org" }

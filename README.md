@@ -37,11 +37,12 @@ README.md                 # This file
    wrangler secret put N8N_WEBHOOK_URL
    ```
    - Paste `https://n8n.empireautom.org/webhook-test/424f7cfd-5ed8-42b8-9382-4ac54e832174` when prompted for `N8N_WEBHOOK_URL`.
-3. Deploy the worker:
+3. Update the `ALLOWED_ORIGIN` variable in `wrangler.toml` so it lists every host that will submit the form (comma-separated). The default configuration includes both the production domain and the Cloudflare Pages preview domain. If you leave the variable blank, the worker will automatically echo the incoming request origin.
+4. Deploy the worker:
    ```bash
    wrangler publish
    ```
-4. Confirm the route `https://www.empireautom.org/api/lead` is active on your zone. Wrangler uses the route defined in `wrangler.toml` to bind the worker automatically.
+5. Confirm the route `https://www.empireautom.org/api/lead` is active on your zone. Wrangler uses the route defined in `wrangler.toml` to bind the worker automatically.
 
 ## Local preview (optional)
 
@@ -66,7 +67,7 @@ The dev server will expose the `/api/lead` endpoint for local testing. Use a too
 ## Testing checklist
 
 - Form submission hits `https://www.empireautom.org/api/lead` and responds with `{ "ok": true }` on success.
-- Response headers include `Access-Control-Allow-Origin: https://www.empireautom.org`.
+- Response headers echo the requesting origin in `Access-Control-Allow-Origin` (e.g. `https://landingpage.empireautom.org`).
 - Rapid submissions (20+ within 60 seconds) from the same IP return HTTP 429 rate-limit responses.
 - Filling the hidden honeypot field (`website`) results in a silent success without forwarding to n8n.
 - Successful submissions display the success message and reset the form state.
