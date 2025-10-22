@@ -37,7 +37,6 @@
   <script>
     window.APP_CONFIG = {
       DEMO_VIDEO_URL: "",
-      TURNSTILE_SITE_KEY: "",
       TURNSTILE_SITE_KEY: "0x4AAAAAAB771F457k4Zdex3",
       SUBMIT_URL: "https://www.empireautom.org/api/lead"
     };
@@ -446,7 +445,7 @@
               Keep me updated with launch tips &amp; case studies
             </label>
             <input type="text" name="website" aria-hidden="true" autocomplete="off" tabindex="-1" class="hidden" />
-            <div id="turnstile-wrap" class="cf-turnstile" data-sitekey="0x4AAAAAAB771F457k4Zdex3" data-theme="dark"></div>
+            <div id="turnstile-wrap" class="cf-turnstile" data-theme="dark"></div>
             <p id="form-message" class="text-sm text-emerald-300" role="status" aria-live="polite"></p>
             <button type="submit" class="button-primary w-full highlight-ring" data-default-label="Request demo">Request demo</button>
           </form>
@@ -600,7 +599,7 @@
     const APP_CONFIG = window.APP_CONFIG || {};
     const turnstileElement = document.getElementById('turnstile-wrap');
     const DEMO_VIDEO_URL = APP_CONFIG.DEMO_VIDEO_URL || '';
-    const TURNSTILE_SITE_KEY = APP_CONFIG.TURNSTILE_SITE_KEY || turnstileElement?.dataset.sitekey || '';
+    const TURNSTILE_SITE_KEY = APP_CONFIG.TURNSTILE_SITE_KEY || '';
     const SUBMIT_URL = APP_CONFIG.SUBMIT_URL || 'https://www.empireautom.org/api/lead';
 
     let mobileMenuOpen = false;
@@ -718,21 +717,31 @@
     }
 
     let turnstileToken = null;
+    let turnstileWidgetId = null;
     window.addEventListener('load', () => {
-      if (window.turnstile && TURNSTILE_SITE_KEY) {
-        window.turnstile.render('#turnstile-wrap', {
-          sitekey: TURNSTILE_SITE_KEY,
-          theme: 'dark',
-          callback: (token) => {
-            turnstileToken = token;
-          },
-          'expired-callback': () => {
-            turnstileToken = null;
-          },
-          'error-callback': () => {
-            turnstileToken = null;
-          },
-        });
+      if (!TURNSTILE_SITE_KEY && turnstileElement) {
+        turnstileElement.style.display = 'none';
+        return;
+      }
+
+      if (window.turnstile && TURNSTILE_SITE_KEY && turnstileElement) {
+        try {
+          turnstileWidgetId = window.turnstile.render(turnstileElement, {
+            sitekey: TURNSTILE_SITE_KEY,
+            theme: 'dark',
+            callback: (token) => {
+              turnstileToken = token;
+            },
+            'expired-callback': () => {
+              turnstileToken = null;
+            },
+            'error-callback': () => {
+              turnstileToken = null;
+            },
+          });
+        } catch (error) {
+          console.warn('Turnstile render failed', error);
+        }
       }
     });
 
@@ -752,11 +761,40 @@
       }
     }
 
+    function resetTurnstileWidget() {
+      if (!TURNSTILE_SITE_KEY) {
+        return;
+      }
+
+      turnstileToken = null;
+      if (window.turnstile && typeof window.turnstile.reset === 'function') {
+        try {
+          if (turnstileWidgetId !== null) {
+            window.turnstile.reset(turnstileWidgetId);
+          } else {
+            window.turnstile.reset();
+          }
+        } catch (error) {
+          console.warn('Turnstile reset failed', error);
+        }
+      }
+    }
+
     form?.addEventListener('submit', async (event) => {
       event.preventDefault();
+
+      if (TURNSTILE_SITE_KEY && !turnstileToken) {
+        setFormState({ message: 'Please complete the verification challenge before submitting.', type: 'error' });
+        return;
+      }
+
       const formData = new FormData(form);
       const payload = Object.fromEntries(formData.entries());
       payload.newsletter = formData.get('newsletter') === 'true';
+
+      if (TURNSTILE_SITE_KEY && turnstileToken) {
+        payload.turnstile_token = turnstileToken;
+      }
 
       setFormState({ loading: true, message: '' });
 
@@ -771,17 +809,19 @@
 
         const data = await response.json().catch(() => ({}));
         if (!response.ok || data.ok === false) {
-          throw new Error(data.message || 'Unable to submit your request right now.');
+          const submissionError = new Error(data.message || 'Unable to submit your request right now.');
+          submissionError.status = response.status;
+          throw submissionError;
         }
 
         setFormState({ message: 'Thanks! We will reach out within one business day.', type: 'success' });
         form.reset();
-        turnstileToken = null;
-        if (window.turnstile) {
-          window.turnstile.reset('#turnstile-wrap');
-        }
+        resetTurnstileWidget();
       } catch (error) {
         setFormState({ message: error.message || 'Submission failed. Try again soon.', type: 'error' });
+        if (error && typeof error === 'object' && 'status' in error && error.status === 400) {
+          resetTurnstileWidget();
+        }
       } finally {
         if (submitButton) {
           submitButton.disabled = false;

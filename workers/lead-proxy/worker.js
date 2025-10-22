@@ -29,7 +29,23 @@ export default {
       return json({ ok: true }, 200, cors);
     }
 
-    payload._meta = {
+    let turnstileDetails = null;
+    if (env.TURNSTILE_SECRET_KEY) {
+      const token = typeof payload.turnstile_token === "string" ? payload.turnstile_token.trim() : "";
+      if (!token) {
+        return json({ message: "Security check failed. Refresh the page and try again." }, 400, cors);
+      }
+
+      const verification = await verifyTurnstile(token, env.TURNSTILE_SECRET_KEY, ip);
+      if (!verification.success) {
+        return json({ message: "Please complete the verification challenge and try again." }, 400, cors);
+      }
+      turnstileDetails = verification.details;
+    }
+
+    delete payload.turnstile_token;
+
+    const meta = {
       ip,
       ua: request.headers.get("User-Agent") || "",
       ts: new Date().toISOString(),
@@ -37,6 +53,25 @@ export default {
       origin: request.headers.get("Origin") || "",
       path: new URL(request.url).pathname,
     };
+
+    if (turnstileDetails) {
+      meta.turnstile = {
+        success: true,
+        challengeTs: turnstileDetails.challenge_ts || "",
+        hostname: turnstileDetails.hostname || "",
+      };
+      if (typeof turnstileDetails.score === "number") {
+        meta.turnstile.score = turnstileDetails.score;
+      }
+      if (turnstileDetails.action) {
+        meta.turnstile.action = turnstileDetails.action;
+      }
+      if (turnstileDetails.cdata) {
+        meta.turnstile.cdata = turnstileDetails.cdata;
+      }
+    }
+
+    payload._meta = meta;
 
     // Forward to n8n
     const forward = await fetch(env.N8N_WEBHOOK_URL, {
@@ -60,6 +95,36 @@ export default {
 
 function json(obj, status, headers) {
   return new Response(JSON.stringify(obj), { status, headers: { "Content-Type": "application/json", ...(headers || {}) }});
+}
+
+async function verifyTurnstile(token, secret, ip) {
+  const params = new URLSearchParams();
+  params.append("secret", secret);
+  params.append("response", token);
+  if (ip && ip !== "unknown") {
+    params.append("remoteip", ip);
+  }
+
+  try {
+    const resp = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: params,
+    });
+
+    if (!resp.ok) {
+      return { success: false };
+    }
+
+    const data = await resp.json().catch(() => null);
+    if (!data || !data.success) {
+      return { success: false };
+    }
+
+    return { success: true, details: data };
+  } catch (error) {
+    return { success: false };
+  }
 }
 
 // naive ratelimit using caches.default (per colo)
