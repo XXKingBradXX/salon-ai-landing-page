@@ -35,8 +35,10 @@ README.md                 # This file
 2. Set the secrets required by the worker:
    ```bash
    wrangler secret put N8N_WEBHOOK_URL
+   wrangler secret put TURNSTILE_SECRET_KEY
    ```
    - Paste `https://n8n.empireautom.org/webhook-test/424f7cfd-5ed8-42b8-9382-4ac54e832174` when prompted for `N8N_WEBHOOK_URL`.
+   - Provide the Turnstile secret key that pairs with site key `0x4AAAAAAB771F457k4Zdex3` when prompted for `TURNSTILE_SECRET_KEY`.
 3. Deploy the worker:
    ```bash
    wrangler publish
